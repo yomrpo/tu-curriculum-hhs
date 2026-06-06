@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TU Curriculum – Jahrgang 10 | Heinrich-Heine-Schule</title>
+<style>
+  :root {
+    --ggp: #1D9E75;
+    --ggp-light: #E1F5EE;
+    --ggp-dark: #085041;
+    --ggp-mid: #0F6E56;
+    --rel: #2B7BB9;
+    --rel-light: #E6F1FB;
+    --rel-dark: #0C447C;
+    --rel-mid: #185FA5;
+    --wat: #C0436B;
+    --wat-light: #FBEAF0;
+    --wat-dark: #72243E;
+    --wat-mid: #993556;
+    --sdg-bg: #F7F5F0;
+    --sdg-border: #D8D4CC;
+    --border: #E5E2DC;
+    --bg: #FAFAF8;
+    --bg-card: #FFFFFF;
+    --text: #1A1A18;
+    --text-muted: #6B6860;
+    --text-light: #9E9B94;
+    --badge-pflicht-bg: #FEE2E2;
+    --badge-pflicht-text: #991B1B;
+    --badge-opt-bg: #F3F4F6;
+    --badge-opt-text: #6B7280;
+    --media-bg: #EEF2FF;
+    --media-text: #3730A3;
+    --sprache-bg: #FFFBEB;
+    --sprache-text: #92400E;
+    --bo-bg: #F0FDF4;
+    --bo-text: #166534;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .header-left h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .header-left .subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+  .header-right {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-align: right;
+    padding-top: 0.25rem;
+  }
+
+  /* LEGENDE */
+  .legende {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.78rem;
+  }
+  .legende-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+  }
+  .legende-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  /* EINHEIT CARD */
+  .einheit {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.6rem;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .einheit-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .einheit-header:hover { background: #F9F8F5; }
+  .einheit-farbstreifen {
+    width: 4px;
+    min-height: 36px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+  .einheit-header-text { flex: 1; min-width: 0; }
+  .einheit-titel {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    line-height: 1.3;
+  }
+  .einheit-fach {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+  .einheit-sdg-preview {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .sdg-badge {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--sdg-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--sdg-border);
+    white-space: nowrap;
+  }
+  .chevron {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    font-family: -apple-system, sans-serif;
+  }
+  .einheit.open .chevron { transform: rotate(180deg); }
+
+  /* EINHEIT BODY */
+  .einheit-body {
+    display: none;
+    padding: 0 1rem 1rem 1rem;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.15s ease;
+  }
+  .einheit.open .einheit-body { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  .komp-label {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-top: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .komp-liste {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .komp-liste li {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .komp-liste li::before {
+    content: '·';
+    position: absolute;
+    left: 0.2rem;
+    color: var(--text-light);
+  }
+  .sdg-detail-wrap {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .sdg-detail {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--sdg-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--sdg-border);
+    font-weight: 500;
+  }
+
+  /* QUERSCHNITT CARDS */
+  .quer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0;
+  }
+  .quer-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .quer-card-titel {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .quer-card.media .quer-card-titel { color: var(--media-text); }
+  .quer-card.sprache .quer-card-titel { color: var(--sprache-text); }
+  .quer-card.bo .quer-card-titel { color: var(--bo-text); }
+
+  .quer-card.media { border-left: 3px solid #818CF8; }
+  .quer-card.sprache { border-left: 3px solid #F59E0B; }
+  .quer-card.bo { border-left: 3px solid #22C55E; }
+
+  .quer-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .quer-items li {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    padding-left: 0.9rem;
+    position: relative;
+  }
+  .quer-items li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--text-light);
+  }
+
+  /* LERNORTE */
+  .lernorte-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0;
+  }
+  .lernort-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .lernort-item.pflicht { border-left: 3px solid #EF4444; }
+  .lernort-item.optional { border-left: 3px solid var(--border); }
+  .lernort-content { flex: 1; min-width: 0; }
+  .lernort-name {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .badge-pflicht {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--badge-pflicht-bg);
+    color: var(--badge-pflicht-text);
+    font-family: -apple-system, sans-serif;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .badge-opt {
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--badge-opt-bg);
+    color: var(--badge-opt-text);
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .lernort-bezug {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media print {
+    .einheit-body { display: block !important; }
+    .chevron { display: none; }
+    body { padding: 1rem; }
+    .einheit-header { cursor: default; }
+  }
+
+  @media (max-width: 600px) {
+    .header-left h1 { font-size: 1.4rem; }
+    .quer-grid { grid-template-columns: 1fr; }
+    .einheit-sdg-preview { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Jahrgang 10</h1>
+    <div class="subtitle">Themenorientierter Unterricht (TU) · Heinrich-Heine-Schule Bremerhaven</div>
+  </div>
+  <div class="header-right">
+    Schuljahr 2026/27<br>
+    WAT · Religion · GGP
+  </div>
+</div>
+
+<div class="legende">
+  <div class="legende-item">
+    <div class="legende-dot" style="background:var(--ggp)"></div>
+    <span>GGP</span>
+  </div>
+  <div class="legende-item">
+    <div class="legende-dot" style="background:var(--rel)"></div>
+    <span>Religion</span>
+  </div>
+  <div class="legende-item">
+    <div class="legende-dot" style="background:var(--wat)"></div>
+    <span>WAT</span>
+  </div>
+  <div class="legende-item" style="margin-left:auto; font-style:italic; color:var(--text-light); font-size:0.72rem; font-family:-apple-system,sans-serif;">
+    ▸ Einheit anklicken zum Aufklappen
+  </div>
+</div>
+
+<div class="section-label">Unterrichtseinheiten</div>
+
+<!-- EINHEIT 1 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--ggp)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Der Nationalsozialismus / Demokratien und Diktaturen</div>
+      <div class="einheit-fach">GGP – Historische &amp; gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 16</span>
+      <span class="sdg-badge">SDG 10</span>
+      <span class="sdg-badge">SDG 5</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>erläutern die NS-Ideologie in ihren Grundzügen und ihre Umsetzung an ausgewählten Beispielen und erörtern die psychologischen und sozialen Auswirkungen auf die Bevölkerung</li>
+      <li>bewerten kritische und unkritische Haltungen sowie Widerstandsbewegungen im nationalsozialistischen Deutschland und im Ausland</li>
+      <li>erläutern Belastungsfaktoren der ersten Demokratie in Deutschland sowie Ursachen und Auswirkungen ihres Scheiterns</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 16 – Frieden, Gerechtigkeit &amp; starke Institutionen</span>
+      <span class="sdg-detail">SDG 10 – Weniger Ungleichheiten</span>
+      <span class="sdg-detail">SDG 5 – Geschlechtergleichheit</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 2 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--ggp)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Der Zweite Weltkrieg / Holocaust &amp; Völkermord im 20. Jahrhundert</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 16</span>
+      <span class="sdg-badge">SDG 10</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>erläutern Ursachen des Zweiten Weltkriegs und ihre Auswirkungen auf Bremen/Bremerhaven, die deutsche Bevölkerung und die Politik im Staat und beschreiben diese in Bezug auf die Gegenwart</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 16 – Frieden, Gerechtigkeit &amp; starke Institutionen</span>
+      <span class="sdg-detail">SDG 10 – Weniger Ungleichheiten</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 3 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--ggp)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Deutschland nach 1945 – DDR / Kalter Krieg / Wiedervereinigung</div>
+      <div class="einheit-fach">GGP – Historische &amp; gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 16</span>
+      <span class="sdg-badge">SDG 10</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>erläutern die Kontroverse zwischen dem Ostblock und den Westmächten von Kriegsende bis zur Auflösung des Ostblocks anhand von ausgewählten Beispielen mit Bezug auf Deutschland und die Weltpolitik</li>
+      <li>beschreiben die Unterschiede in den politischen und gesellschaftlichen Systemen in Ost und West am Beispiel BRD/DDR und erläutern Ideologien, Konzepte, Rechtfertigungen und Strategien</li>
+      <li>erläutern den Prozess der deutschen Einigung im nationalen und internationalen Kontext und stellen Chancen und Probleme des vereinten Deutschlands gegenüber</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 16 – Frieden, Gerechtigkeit &amp; starke Institutionen</span>
+      <span class="sdg-detail">SDG 10 – Weniger Ungleichheiten</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 4 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--ggp)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Gesellschaftlicher Wandel / Soziale Schichten / Sicherheit &amp; Partizipation</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 10</span>
+      <span class="sdg-badge">SDG 1</span>
+      <span class="sdg-badge">SDG 5</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>beschreiben und erklären die Sozialstruktur in Deutschland und beschreiben Veränderungen sozialer Strukturen und sich daraus ergebende Herausforderungen für Politik</li>
+      <li>erläutern sozialpolitische Maßnahmen an einem ausgewählten Beispiel, stellen gesellschaftliche Interessenskonstellationen dar und beziehen Stellung dazu</li>
+      <li>stellen Bevölkerungsentwicklung und -politik in unterschiedlich entwickelten Staaten dar und entwickeln Szenarien für die Zukunft</li>
+      <li>beschreiben und diskutieren die Notwendigkeit einer langfristigen Daseinsvorsorge an Hand von Beispielen</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 1 – Keine Armut</span>
+      <span class="sdg-detail">SDG 5 – Geschlechtergleichheit</span>
+      <span class="sdg-detail">SDG 10 – Weniger Ungleichheiten</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 5 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--ggp)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Europa &amp; Internationale Politik / Frieden &amp; Kooperation</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 16</span>
+      <span class="sdg-badge">SDG 17</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>stellen die Bedeutung der europäischen Einigung für Deutschland an Beispielen dar und erörtern exemplarisch Chancen und Schwierigkeiten der europäischen Integration</li>
+      <li>beschreiben das Spannungsverhältnis von Menschenrechtspolitik und internationaler Kooperation</li>
+      <li>erläutern Interessens- und Machtkonstellationen an einem ausgewählten internationalen Konflikt</li>
+      <li>stellen Voraussetzungen und Möglichkeiten der friedlichen Konfliktlösung an einem internationalen Konflikt dar</li>
+      <li>stellen ihre Position zu Fragestellungen globaler und gesellschaftlicher Herausforderungen dar und begründen diese und entwickeln dafür Argumentationszusammenhänge</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 16 – Frieden, Gerechtigkeit &amp; starke Institutionen</span>
+      <span class="sdg-detail">SDG 17 – Partnerschaften zur Erreichung der Ziele</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 6 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--rel)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Theodizee / Endlichkeit und Tod / Glaubensfreiheit &amp; Religionskritik</div>
+      <div class="einheit-fach">Religion – Urteils-, Reflexions- &amp; Deutungskompetenz / Dialogkompetenz</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 16</span>
+      <span class="sdg-badge">SDG 10</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>begründen ihre eigene Haltung in religiös-existentiellen Fragen (z.B. Sinnfrage, Gerechtigkeit, Endlichkeit) und zu theologischen Themen (z.B. Jenseitsvorstellungen, Wahrheitsfrage) und setzen sich argumentativ mit den Auffassungen und Begründungen anderer auseinander</li>
+      <li>analysieren, vergleichen und beurteilen begründet Positionen und Argumentationen aus Philosophie und Theologie unter gezielten Fragestellungen (z.B. Umgang mit Begrenztheit)</li>
+      <li>erläutern an Beispielen die Funktion religiöser Texte und Ausdrucksformen und prüfen ihre Relevanz für das eigene Leben</li>
+      <li>begründen ihre eigene Haltung in religiös-existentiellen Fragen und setzen sich argumentativ mit den Auffassungen anderer auseinander</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 16 – Frieden, Gerechtigkeit &amp; starke Institutionen</span>
+      <span class="sdg-detail">SDG 10 – Weniger Ungleichheiten</span>
+    </div>
+  </div>
+</div>
+
+<!-- EINHEIT 7 -->
+<div class="einheit" onclick="toggle(this)">
+  <div class="einheit-header">
+    <div class="einheit-farbstreifen" style="background:var(--wat)"></div>
+    <div class="einheit-header-text">
+      <div class="einheit-titel">Haushalt &amp; Konsum / Was kostet das Leben? / Schuldenprävention</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="einheit-sdg-preview">
+      <span class="sdg-badge">SDG 1</span>
+      <span class="sdg-badge">SDG 12</span>
+      <span class="sdg-badge">SDG 3</span>
+    </div>
+    <div class="chevron">▾</div>
+  </div>
+  <div class="einheit-body">
+    <div class="komp-label">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste">
+      <li>erörtern eine gesundheitsbewusste, bedürfnisgerechte und sozialverantwortliche Lebensführung</li>
+      <li>beschreiben verbraucherpolitische Maßnahmen im Konfliktbereich zwischen Wettbewerb, Verbraucherinformation und Konsumentenschutz und untersuchen ihre Wirksamkeit</li>
+      <li>stellen rechtliche Grundlagen zum Schutz von Verbrauchern, Arbeitnehmern, Eigentümern und Umwelt sowie zur sozialen Sicherung dar, überprüfen Verbraucherschutz und Verbraucherrechte in exemplarischen Konfliktfällen</li>
+      <li>beschreiben und diskutieren die Notwendigkeit einer langfristigen Daseinsvorsorge an Hand von Beispielen</li>
+      <li>reflektieren Motive der Verschuldung und Chancen und Risiken der Kreditaufnahme sowie diskutieren den Umgang mit Überschuldung</li>
+      <li>nachhaltiges Wirtschaften</li>
+      <li>Gesundheitsprävention und Verbraucherschutz</li>
+    </ul>
+    <div class="komp-label">BNE-Ziele / SDGs</div>
+    <div class="sdg-detail-wrap">
+      <span class="sdg-detail">SDG 1 – Keine Armut</span>
+      <span class="sdg-detail">SDG 2 – Kein Hunger</span>
+      <span class="sdg-detail">SDG 3 – Gesundheit &amp; Wohlbefinden</span>
+      <span class="sdg-detail">SDG 12 – Nachhaltiger Konsum &amp; Produktion</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUERSCHNITT -->
+<div class="section-label">Querschnittskompetenzen</div>
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-card-titel">📱 Medienkompetenz</div>
+    <ul class="quer-items">
+      <li>Bewerbungsverfahren digital (Online, Telefon, Eignungstest)</li>
+      <li>Informations- &amp; Beratungsangebote online nutzen und bewerten</li>
+      <li>Komplexe Inhalte multimedial darstellen (Video, PPT, Ausstellung)</li>
+      <li>Arbeitsergebnisse adressatengerecht medial aufbereiten und öffentlich vorstellen</li>
+      <li>Digitale Medien zur Lösung komplexer Problemstellungen selbstständig verwenden und reflektieren</li>
+      <li>Propaganda und Medienmanipulation analysieren</li>
+    </ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-card-titel">📝 Sprachsensibler Unterricht</div>
+    <ul class="quer-items">
+      <li>Präsentationen bis 20 Min. (Gliederung + Produkt + Fazit + Quellen)</li>
+      <li>Erörterungen und Diskussionsbeiträge formulieren</li>
+      <li>Komplexe Sachverhalte schriftlich zusammenhängend wiedergeben</li>
+      <li>Glossar / Fachwörterbuch führen (itslearning)</li>
+      <li>Rhetorische Mittel in Diskussionen und Debatten anwenden</li>
+      <li>Lerntagebuch nutzen</li>
+    </ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-card-titel">🎯 Berufsorientierung</div>
+    <ul class="quer-items">
+      <li>Berufswahlpass abschließen und dokumentieren</li>
+      <li>Betriebspraktikum (2 Wochen) vorbereiten, durchführen, auswerten</li>
+      <li>BIM-Besuch (Berufsinformationsmesse)</li>
+      <li>Bewerbungstraining (online, schriftlich, Gespräch)</li>
+      <li>Projekt „Was kostet das Leben?"</li>
+      <li>Dualer vs. schulischer Ausbildungsweg</li>
+      <li>Wöchentliche Einzelberatungen durch Berufsberaterin</li>
+    </ul>
+  </div>
+</div>
+
+<!-- AUßERSCHULISCHE LERNORTE -->
+<div class="section-label">Außerschulische Lernorte &amp; Projekte</div>
+<div class="lernorte-grid">
+  <div class="lernort-item pflicht">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Denkort Bunker Valentin
+        <span class="badge-pflicht">verpflichtend</span>
+      </div>
+      <div class="lernort-bezug">NS-Zwangsarbeit, Holocaust, Judenverfolgung → passt zu Einheit 2 (2. Weltkrieg / Holocaust)</div>
+    </div>
+  </div>
+  <div class="lernort-item pflicht">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Tag der Stadtgeschichte
+        <span class="badge-pflicht">verpflichtend</span>
+      </div>
+      <div class="lernort-bezug">Lokale Geschichte Bremerhavens → passt zu Einheit 3 (Deutschland nach 1945) und Einheit 4 (gesellschaftlicher Wandel)</div>
+    </div>
+  </div>
+  <div class="lernort-item pflicht">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Demokratietag Bremen
+        <span class="badge-pflicht">verpflichtend (Bremen)</span>
+      </div>
+      <div class="lernort-bezug">Demokratische Teilhabe und Partizipation → passt zu Einheit 1 (NS / Demokratie) und Einheit 5 (Europa &amp; internationale Politik)</div>
+    </div>
+  </div>
+  <div class="lernort-item optional">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Überseemuseum
+        <span class="badge-opt">optional</span>
+      </div>
+      <div class="lernort-bezug">Kolonialismus, globale Perspektiven → passt zu Einheit 5 (internationale Politik)</div>
+    </div>
+  </div>
+  <div class="lernort-item optional">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Stadtarchiv Bremerhaven
+        <span class="badge-opt">optional</span>
+      </div>
+      <div class="lernort-bezug">Lokale Erinnerungskultur, Quellenkritik → passt zu Einheit 2 (Holocaust) und Einheit 3 (DDR/Deutschland nach 1945)</div>
+    </div>
+  </div>
+  <div class="lernort-item optional">
+    <div class="lernort-content">
+      <div class="lernort-name">
+        Stolpersteine (Stadtführung)
+        <span class="badge-opt">optional</span>
+      </div>
+      <div class="lernort-bezug">Holocaust, lokale Erinnerungskultur → passt zu Einheit 2</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>HHS Bremerhaven · TU-Fachcurriculum · Jahrgang 10</span>
+  <span>Stand: 2026 · Kursiv = optional</span>
+</div>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

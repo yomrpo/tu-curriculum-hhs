@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TU Fachcurriculum – Heinrich-Heine-Schule Bremerhaven</title>
+<style>
+:root {
+  --ggp: #1D9E75; --ggp-l: #E1F5EE; --ggp-d: #085041;
+  --rel: #2B7BB9; --rel-l: #E6F1FB; --rel-d: #0C447C;
+  --wat: #C0436B; --wat-l: #FBEAF0; --wat-d: #72243E;
+  --border: #E5E2DC; --bg: #FAFAF8; --card: #fff;
+  --text: #1A1A18; --muted: #6B6860; --light: #9E9B94;
+  --media-c: #3730A3; --media-bg: #EEF2FF; --media-acc: #818CF8;
+  --sprache-c: #92400E; --sprache-bg: #FFFBEB; --sprache-acc: #F59E0B;
+  --bo-c: #166534; --bo-bg: #F0FDF4; --bo-acc: #22C55E;
+  --sdg-bg: #F7F5F0; --sdg-border: #D8D4CC;
+  --pflicht: #EF4444; --pflicht-bg: #FEE2E2; --pflicht-text: #991B1B;
+  --opt-bg: #F3F4F6; --opt-text: #6B7280;
+  --tab-active: #1D9E75; --tab-bg: #fff;
+  --radius: 10px; --radius-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--ggp); color: #fff; padding: 16px 20px 0;
+}
+.site-header h1 {
+  font-size: 1.2rem; font-weight: 700; margin-bottom: 2px;
+}
+.site-header .school {
+  font-size: 0.78rem; opacity: 0.8; margin-bottom: 12px;
+}
+
+/* TABS */
+.tab-bar {
+  display: flex; gap: 4px; overflow-x: auto;
+  padding-bottom: 0; -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+  background: rgba(255,255,255,0.2); border: none;
+  color: rgba(255,255,255,0.85); font-size: 0.82rem;
+  font-weight: 600; padding: 8px 14px; border-radius: 8px 8px 0 0;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.35); }
+.tab-btn.active {
+  background: var(--bg); color: var(--ggp);
+  border-bottom: 2px solid var(--bg);
+}
+
+/* CONTENT */
+.main { max-width: 900px; margin: 0 auto; padding: 20px 16px 40px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* JG HEADER */
+.jg-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+}
+.jg-header h2 {
+  font-size: 1.6rem; font-weight: 700; color: var(--text);
+}
+.jg-thema {
+  font-size: 0.9rem; color: var(--muted); font-style: italic; margin-top: 2px;
+}
+.legende {
+  display: flex; gap: 12px; font-size: 0.78rem; color: var(--muted);
+  align-items: center; flex-wrap: wrap;
+}
+.dot {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: 50%; margin-right: 4px; vertical-align: middle;
+}
+.dot.ggp { background: var(--ggp); }
+.dot.rel { background: var(--rel); }
+.dot.wat { background: var(--wat); }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--light); margin-bottom: 8px;
+}
+.section-label small {
+  font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--light);
+  font-size: 0.9em;
+}
+
+/* EINHEIT */
+.einheit {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 6px; overflow: hidden;
+}
+.einheit-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; cursor: pointer; user-select: none;
+  transition: background 0.12s;
+}
+.einheit-header:hover { background: #F9F8F5; }
+.farbbalken {
+  width: 4px; min-height: 38px; border-radius: 2px; flex-shrink: 0; align-self: stretch;
+}
+.farbbalken.ggp { background: var(--ggp); }
+.farbbalken.rel { background: var(--rel); }
+.farbbalken.wat { background: var(--wat); }
+.einheit-meta { flex: 1; min-width: 0; }
+.einheit-titel {
+  font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1.3;
+}
+.einheit-fach { font-size: 0.72rem; color: var(--light); margin-top: 2px; }
+.sdg-preview { display: flex; gap: 4px; flex-wrap: wrap; }
+.sdg-badge {
+  font-size: 0.62rem; font-weight: 700; padding: 2px 6px;
+  border-radius: 20px; background: var(--sdg-bg); color: var(--muted);
+  border: 1px solid var(--sdg-border); white-space: nowrap;
+}
+.chevron {
+  font-size: 0.8rem; color: var(--light); transition: transform 0.2s; flex-shrink: 0;
+}
+.chevron.open { transform: rotate(180deg); }
+.einheit-body {
+  display: none; padding: 0 12px 12px 22px;
+  border-top: 1px solid var(--border);
+}
+.einheit-body.open { display: block; }
+.komp-head {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--light); margin: 10px 0 4px;
+}
+.komp-liste {
+  list-style: none; padding: 0;
+}
+.komp-liste li {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+  padding: 3px 0 3px 12px; position: relative;
+}
+.komp-liste li::before {
+  content: '·'; position: absolute; left: 2px; color: var(--light);
+}
+.sdg-full-wrap { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.sdg-full {
+  font-size: 0.72rem; font-weight: 500; padding: 3px 10px;
+  border-radius: 20px; background: var(--sdg-bg); color: var(--muted);
+  border: 1px solid var(--sdg-border);
+}
+
+/* QUERSCHNITT */
+.quer-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px;
+}
+.quer-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px; font-size: 0.78rem;
+}
+.quer-card.media { border-left: 3px solid var(--media-acc); background: var(--media-bg); }
+.quer-card.sprache { border-left: 3px solid var(--sprache-acc); background: var(--sprache-bg); }
+.quer-card.bo { border-left: 3px solid var(--bo-acc); background: var(--bo-bg); }
+.quer-titel {
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 6px;
+}
+.quer-card.media .quer-titel { color: var(--media-c); }
+.quer-card.sprache .quer-titel { color: var(--sprache-c); }
+.quer-card.bo .quer-titel { color: var(--bo-c); }
+.quer-card ul { list-style: none; padding: 0; }
+.quer-card li { padding: 2px 0 2px 12px; position: relative; color: var(--muted); line-height: 1.4; }
+.quer-card li::before { content: '–'; position: absolute; left: 0; color: var(--light); }
+
+/* LERNORTE */
+.lernorte-liste { display: flex; flex-direction: column; gap: 6px; }
+.lernort {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+.lernort.pflicht { border-left: 3px solid var(--pflicht); }
+.lernort.optional { border-left: 3px solid var(--border); }
+.lernort-name {
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.lernort-bezug { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+.badge-pflicht {
+  font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 20px;
+  background: var(--pflicht-bg); color: var(--pflicht-text); text-transform: uppercase;
+}
+.badge-opt {
+  font-size: 0.6rem; font-weight: 600; padding: 2px 7px; border-radius: 20px;
+  background: var(--opt-bg); color: var(--opt-text); text-transform: uppercase;
+}
+
+/* BEWERTUNG */
+.bw-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 12px; margin-top: 12px; }
+.bw-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px;
+}
+.bw-card.neutral { margin-bottom: 12px; }
+.bw-card.bereich1 { border-left: 4px solid #818CF8; }
+.bw-card.bereich2 { border-left: 4px solid var(--bo-acc); }
+.bw-titel { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.bw-gewichtung {
+  display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 2px 10px;
+  border-radius: 20px; background: #EEF2FF; color: var(--media-c); margin-bottom: 6px;
+}
+.bw-card.bereich2 .bw-gewichtung { background: var(--bo-bg); color: var(--bo-c); }
+.bw-hinweis { font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; }
+.bw-card ul { list-style: none; padding: 0; }
+.bw-card li { font-size: 0.82rem; color: var(--muted); padding: 3px 0 3px 12px; position: relative; }
+.bw-card li::before { content: '·'; position: absolute; left: 2px; color: var(--light); }
+
+/* FOOTER */
+.footer {
+  margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--border);
+  font-size: 0.7rem; color: var(--light); display: flex;
+  justify-content: space-between; flex-wrap: wrap; gap: 4px;
+}
+
+@media (max-width: 600px) {
+  .jg-header h2 { font-size: 1.3rem; }
+  .sdg-preview { display: none; }
+  .quer-grid { grid-template-columns: 1fr; }
+  .bw-grid { grid-template-columns: 1fr; }
+  .site-header h1 { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>TU Fachcurriculum</h1>
+  <div class="school">Heinrich-Heine-Schule Bremerhaven · WAT · GGP · Religion · Stand 2026/27</div>
+  <nav class="tab-bar">
+    <button class="tab-btn" id="btn-jg5" onclick="switchTab('jg5')" title="Jahrgang 5">Jg. 5</button>
+<button class="tab-btn" id="btn-jg6" onclick="switchTab('jg6')" title="Jahrgang 6">Jg. 6</button>
+<button class="tab-btn" id="btn-jg7" onclick="switchTab('jg7')" title="Jahrgang 7">Jg. 7</button>
+<button class="tab-btn" id="btn-jg8" onclick="switchTab('jg8')" title="Jahrgang 8">Jg. 8</button>
+<button class="tab-btn" id="btn-jg9" onclick="switchTab('jg9')" title="Jahrgang 9">Jg. 9</button>
+<button class="tab-btn" id="btn-jg10" onclick="switchTab('jg10')" title="Jahrgang 10">Jg. 10</button>
+<button class="tab-btn" id="btn-bewertung" onclick="switchTab('bewertung')" title="Bewertung">⚖ Bewertung</button>
+
+  </nav>
+</header>
+
+<main class="main">
+  
+<div class="tab-content" id="tab-jg5">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 5</h2>
+      <div class="jg-thema">Zusammenleben, Orientierung & Verantwortung</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg5_e0">
+  <div class="einheit-header" onclick="toggle('jg5_e0')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Regeln des Zusammenlebens</div>
+      <div class="einheit-fach">GGP – Gesellschaftliche Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 13: Maßnahmen zum Klimaschutz">SDG 13</span></div>
+    <div class="chevron" id="jg5_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg5_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… benennen Regeln für das Zusammenleben, entwickeln eigene Regeln in der Gruppe und begründen diese.</li>
+<li>… erkennen Konflikte in der Gruppe, beschreiben sie altersgemäß und setzen Lösungsstrategien in Handlung um.</li>
+<li>… beschreiben Möglichkeiten der altersgemäßen Partizipation und nehmen diese wahr.</li>
+<li>… benennen exemplarisch gesellschaftliche und politische Strukturen aus ihrem Umfeld (Bürgerinitiative, Regierung, Bürgerschaft).</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 13 – Maßnahmen zum Klimaschutz</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg5_e1">
+  <div class="einheit-header" onclick="toggle('jg5_e1')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Ethik und Religion – Eigene und fremde Werte</div>
+      <div class="einheit-fach">Religion – Dialogkompetenz</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span></div>
+    <div class="chevron" id="jg5_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg5_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… tauschen sich über die vielfältigen Elemente von Religionen, Kulturen und Lebensweisen aus und akzeptieren Gemeinsamkeiten und Unterschiede.</li>
+<li>… erklären die Bedeutung unterschiedlicher Werte und Traditionen für sich selbst und andere an Beispielen.</li>
+<li>… begründen an Beispielen, warum ihnen bestimmte Elemente ihrer eigenen Tradition, ihres Glaubens und/oder ihrer Weltanschauung wichtig sind.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg5_e2">
+  <div class="einheit-header" onclick="toggle('jg5_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Kinderrechte & Verantwortung</div>
+      <div class="einheit-fach">GGP – Gesellschaftliche Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 2: Kein Hunger">SDG 2</span> <span class="sdg-badge" title="SDG 3: Gesundheit & Wohlbefinden">SDG 3</span> <span class="sdg-badge" title="SDG 4: Hochwertige Bildung">SDG 4</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 6: Sauberes Wasser">SDG 6</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 15: Leben an Land">SDG 15</span></div>
+    <div class="chevron" id="jg5_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg5_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… zeigen Beispiele für Kinderrechte auf und erläutern die Bedeutung für ihr Leben.</li>
+<li>… stellen den Umgang der Menschen mit der Umwelt und den Ressourcen dar und erläutern Beispiele für umweltschonende Maßnahmen im Alltag.</li>
+<li>… zeigen Beispiele für Kinderrechte auf und erläutern die Bedeutung für ihr Leben.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 2 – Kein Hunger</span> <span class="sdg-full">SDG 3 – Gesundheit & Wohlbefinden</span> <span class="sdg-full">SDG 4 – Hochwertige Bildung</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 6 – Sauberes Wasser</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 15 – Leben an Land</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg5_e3">
+  <div class="einheit-header" onclick="toggle('jg5_e3')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Infrastrukturen & Mobilität</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 9: Industrie, Innovation & Infrastruktur">SDG 9</span> <span class="sdg-badge" title="SDG 11: Nachhaltige Städte">SDG 11</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 11: Nachhaltige Städte">SDG 11</span> <span class="sdg-badge" title="SDG 13: Klimaschutz">SDG 13</span></div>
+    <div class="chevron" id="jg5_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg5_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben das eigene Mobilitätsverhalten (Verkehrsmittel, Zeit, Kosten), vergleichen und beurteilen dieses mit anderen.</li>
+<li>… beschreiben und bewerten den Einsatz und die technischen Funktionen eines alltäglichen Verkehrs- und Transportmittels.</li>
+<li>… beschreiben und dokumentieren technische Entwicklungen in ihrer zeitlichen Abfolge.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 9 – Industrie, Innovation & Infrastruktur</span> <span class="sdg-full">SDG 11 – Nachhaltige Städte</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 11 – Nachhaltige Städte</span> <span class="sdg-full">SDG 13 – Klimaschutz</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg5_e4">
+  <div class="einheit-header" onclick="toggle('jg5_e4')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Räumliche Orientierung & Umwelt</div>
+      <div class="einheit-fach">GGP – Geografische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 9: Industrie, Innovation & Infrastruktur">SDG 9</span> <span class="sdg-badge" title="SDG 11: Nachhaltige Städte">SDG 11</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 13: Klimaschutz">SDG 13</span> <span class="sdg-badge" title="SDG 14: Leben unter Wasser">SDG 14</span> <span class="sdg-badge" title="SDG 15: Leben an Land">SDG 15</span></div>
+    <div class="chevron" id="jg5_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg5_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… finden sich mittels Orientierungshilfen im realen Raum zurecht.</li>
+<li>… bestimmen die Lage ausgewählter geografischer Objekte auf der Erde mit Atlas, Globus und Gradnetz.</li>
+<li>… beschreiben charakteristische Naturräume der Region und Deutschlands und vergleichen sie miteinander.</li>
+<li>… erläutern die Bedeutung ausgewählter Naturräume für den Menschen und vergleichen diese mit den eigenen Lebensbedingungen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 9 – Industrie, Innovation & Infrastruktur</span> <span class="sdg-full">SDG 11 – Nachhaltige Städte</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 13 – Klimaschutz</span> <span class="sdg-full">SDG 14 – Leben unter Wasser</span> <span class="sdg-full">SDG 15 – Leben an Land</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Digitale Medien zur Lösung vorgegebener Problemstellungen mit Anleitung anwenden</li>
+<li>Arbeitsergebnisse auch unter Verwendung digitaler Medien präsentieren</li>
+<li>Inhalte zusammenhängend in verschiedenen Formen darstellen (kurze Zusammenfassung, Vortrag, Rollenspiel)</li>
+<li>Geografische Objekte mit der App Karten (o.ä.) bestimmen</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 5 Minuten</li>
+<li>Thema kurz vorstellen, Produkt präsentieren (Plakat, Keynote…)</li>
+<li>Schrift lesbar, Stichwörter – keine Fließtexte</li>
+<li>Einfache Strukturierungstechniken anwenden</li>
+<li>Einfache Methoden zur Rückmeldung nutzen</li>
+<li>Kurzreferate erarbeiten und halten</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Erste Kontakte zur Arbeitswelt herstellen</li>
+<li>Boys-/Girlsday (freiwillig)</li>
+<li>Betriebe im Stadtteil erkunden</li>
+<li>Grundlegende handwerkliche Arbeitsprozesse kennenlernen</li>
+<li>Berufe und Berufsfelder kennenlernen</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Zoo am Meer & Klimahaus Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Naturräume, Umwelt, Klimawandel → Einheit Räumliche Orientierung & Umwelt</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Türkische Islamische Gemeinde / Moschee <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Religionen, Werte → Einheit Ethik und Religion</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Liberale Jüdische Gemeinde / Synagoge <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Religionen, Werte → Einheit Ethik und Religion</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Inklusive Wattwanderung Wattenmeer <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Naturräume, Geografie → Einheit Räumliche Orientierung</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe und Partizipation (verpflichtend in Bremen, alle Jahrgänge)</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-jg6">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 6</h2>
+      <div class="jg-thema">Kulturelles Erbe, Haushalt & Religionen</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg6_e0">
+  <div class="einheit-header" onclick="toggle('jg6_e0')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Kulturelles Erbe aus der Vergangenheit – Steinzeit bis Antike</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 6: Sauberes Wasser">SDG 6</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 15: Leben an Land">SDG 15</span> <span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span></div>
+    <div class="chevron" id="jg6_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg6_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben unterschiedliche Lebensweisen der Vor- und Frühgeschichte und benennen die jeweiligen Vor- und Nachteile.</li>
+<li>… betrachten historische Ereignisse aus verschiedenen Perspektiven.</li>
+<li>… vergleichen heutige Lebensverhältnisse mit historischen exemplarisch.</li>
+<li>… benennen ausgewählte Gesellschaftsordnungen der Antike und vergleichen diese hinsichtlich ihrer Unterschiede.</li>
+<li>… benennen an Beispielen bedeutsame Fakten und Überlieferungen der Antike.</li>
+<li>… erkennen Spuren der Antike in der Gegenwart und ordnen ihren Ursprung historisch ein.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 6 – Sauberes Wasser</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 15 – Leben an Land</span> <span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg6_e1">
+  <div class="einheit-header" onclick="toggle('jg6_e1')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Gott und Mensch in den Religionen / Heilige Schriften</div>
+      <div class="einheit-fach">Religion – Urteils-, Deutungs- & Reflexionskompetenz</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg6_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg6_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… vollziehen religiöse Lebensformen und Praktiken (z.B. Gebet, Pilgern, Fasten, Gottesdienste, Gedenken) in ihrer Bedeutung für die Gläubigen nach.</li>
+<li>… setzen sich mit Vorurteilen und Ausgrenzungen argumentativ auseinander.</li>
+<li>… erkennen und benennen zentrale religiöse Elemente in Text, Bild und Material eigenständig und ordnen sie einzelnen Religionen und Traditionen zu.</li>
+<li>… vergegenwärtigen sich die (Lebens-)Situationen, Erfahrungen, Perspektiven und Vorstellungen, die in Heiligen Schriften zur Sprache kommen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg6_e2">
+  <div class="einheit-header" onclick="toggle('jg6_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Lebens- und Herrschaftsformen in der Vergangenheit</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span></div>
+    <div class="chevron" id="jg6_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg6_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… benennen ausgewählte Gesellschaftsordnungen der Antike und vergleichen diese hinsichtlich ihrer Unterschiede.</li>
+<li>… erkennen Spuren der Antike in der Gegenwart.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg6_e3">
+  <div class="einheit-header" onclick="toggle('jg6_e3')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Haushalt und Konsum</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span></div>
+    <div class="chevron" id="jg6_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg6_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben Arbeitsteilung im privaten Haushalt und diskutieren und bewerten Konflikte, auch unter geschlechtsspezifischen Gesichtspunkten.</li>
+<li>… beschreiben unterschiedliche Geldverwendungszwecke im privaten Haushalt.</li>
+<li>… diskutieren an konkreten Entscheidungssituationen den Zusammenhang zwischen verfügbaren Mitteln und Konsumansprüchen.</li>
+<li>… beschreiben grundlegende fachpraktische Arbeitsweisen und -techniken in den Bereichen Ernährung, Gesundheit und Bekleidung.</li>
+<li>… vergleichen und beurteilen Formen einer gesundheitsfördernden Ernährung mit dem eigenen Ernährungsverhalten.</li>
+<li>… vergleichen unterschiedliche Produktionswege ausgewählter Lebensmittel und weiterer Produkte.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg6_e4">
+  <div class="einheit-header" onclick="toggle('jg6_e4')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Unternehmen und Produktion / Berufsorientierung</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span></div>
+    <div class="chevron" id="jg6_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg6_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben grundlegende Arbeitsweisen und -techniken in der Werkstoffbearbeitung und -verarbeitung.</li>
+<li>… beschreiben exemplarisch einen Produktionsablauf an der Herstellung eines eigenen Werkstücks.</li>
+<li>… übertragen beispielhaft die Verlaufsstruktur eines Fertigungs- und Konstruktionsprozesses auf die Grundfunktionen eines Betriebes.</li>
+<li>… diskutieren den Berufsorientierungsprozess als wichtige Aufgabe der persönlichen Lebensplanung.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Digitale Medien zur Lösung vorgegebener Problemstellungen mit Anleitung anwenden</li>
+<li>Arbeitsergebnisse auch unter Verwendung digitaler Medien präsentieren</li>
+<li>Inhalte zusammenhängend in verschiedenen Formen darstellen (kurze Zusammenfassung, Vortrag, Rollenspiel)</li>
+<li>Geografische Objekte mit der App Karten (o.ä.) bestimmen</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 5 Minuten</li>
+<li>Thema kurz vorstellen, Produkt präsentieren (Plakat, Keynote…)</li>
+<li>Schrift lesbar, Stichwörter – keine Fließtexte</li>
+<li>Einfache Strukturierungstechniken anwenden</li>
+<li>Einfache Methoden zur Rückmeldung nutzen</li>
+<li>Kurzreferate erarbeiten und halten</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Erste Kontakte zur Arbeitswelt herstellen</li>
+<li>Boys-/Girlsday (freiwillig)</li>
+<li>Betriebe im Stadtteil erkunden</li>
+<li>Grundlegende handwerkliche Arbeitsprozesse kennenlernen</li>
+<li>Berufe und Berufsfelder kennenlernen</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Historisches Museum Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Steinzeit, Kulturelles Erbe → Einheit Kulturelles Erbe</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Bachmann Museum Bremervörde (Steinzeitlager) <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Steinzeit, Vorgeschichte → Einheit Kulturelles Erbe</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Türkische Islamische Gemeinde / Moschee <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Religionen → Einheit Gott und Mensch</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Liberale Jüdische Gemeinde / Synagoge <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Religionen → Einheit Gott und Mensch</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe und Partizipation (verpflichtend in Bremen, alle Jahrgänge)</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-jg7">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 7</h2>
+      <div class="jg-thema">Planet Erde, Mittelalter & Klimawandel</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg7_e0">
+  <div class="einheit-header" onclick="toggle('jg7_e0')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Planet und Lebensraum Erde – Geographie & Klimazonen</div>
+      <div class="einheit-fach">GGP – Geografische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 13: Maßnahmen zum Klimaschutz">SDG 13</span> <span class="sdg-badge" title="SDG 15: Leben an Land">SDG 15</span></div>
+    <div class="chevron" id="jg7_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern die Stellung und die Bewegungen der Erde im Sonnensystem und deren Auswirkungen.</li>
+<li>… benennen die natürlichen Sphären des Systems Erde und stellen einzelne Wechselwirkungen dar.</li>
+<li>… stellen das Zusammenwirken von Geofaktoren und ihre Auswirkungen dar.</li>
+<li>… nutzen die Einteilung der Erde in verschiedene Klima- und Landschaftszonen als Ordnungssysteme.</li>
+<li>… stellen exemplarisch das Einwirken der Menschen in die Umwelt und dessen Auswirkungen dar.</li>
+<li>… entwickeln Handlungsperspektiven für den Schutz der Umwelt und beurteilen deren Zukunftsfähigkeit.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 13 – Maßnahmen zum Klimaschutz</span> <span class="sdg-full">SDG 15 – Leben an Land</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg7_e1">
+  <div class="einheit-header" onclick="toggle('jg7_e1')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Klimawandel</div>
+      <div class="einheit-fach">GGP – Geografische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 13: Klimaschutz">SDG 13</span> <span class="sdg-badge" title="SDG 7: Saubere Energie">SDG 7</span></div>
+    <div class="chevron" id="jg7_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben komplexere atmosphärische Prozesse und geotektonische Vorgänge.</li>
+<li>… beschreiben die Energieversorgung im Land Bremen und diskutieren aktuelle und zukünftige Energieversorgungsprobleme.</li>
+<li>… beschreiben und beurteilen die Chancen regenerativer Energien an Beispielen.</li>
+<li>… beschreiben und wenden Energiesparmaßnahmen an.</li>
+<li>… beschreiben verschiedene Arten der Energieumwandlung und Energiebereitstellung.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 13 – Klimaschutz</span> <span class="sdg-full">SDG 7 – Saubere Energie</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg7_e2">
+  <div class="einheit-header" onclick="toggle('jg7_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Europäisches Mittelalter und frühe Neuzeit</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 4: Hochwertige Bildung">SDG 4</span> <span class="sdg-badge" title="SDG 6: Sauberes Wasser">SDG 6</span></div>
+    <div class="chevron" id="jg7_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben die historische Ausgangslage des Mittelalters.</li>
+<li>… stellen Einflussfaktoren auf das Alltagsleben und die Lebensbedingungen in verschiedenen Epochen der Geschichte in Deutschland dar.</li>
+<li>… erläutern Auswirkungen unterschiedlicher Epochen der deutschen Geschichte auf das heutige Deutschland.</li>
+<li>… vergleichen wesentliche Merkmale politischer Macht in unterschiedlichen Herrschaftsformen.</li>
+<li>… erläutern den Einfluss und die Bedeutung von Glaube und Religion für Gesellschaft und Politik.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 4 – Hochwertige Bildung</span> <span class="sdg-full">SDG 6 – Sauberes Wasser</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg7_e3">
+  <div class="einheit-header" onclick="toggle('jg7_e3')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Glaube und Religionsgemeinschaften / Propheten</div>
+      <div class="einheit-fach">Religion – Urteils- & Reflexionskompetenz</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span></div>
+    <div class="chevron" id="jg7_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erkennen und erläutern Vorurteile über Religion(en) an konkreten Beispielen und reflektieren die eigenen Voreinstellungen.</li>
+<li>… beziehen ethische Weisungen der Religionen auf die eigene Lebenssituation.</li>
+<li>… erläutern religiöse Normen, Weisungen und Impulse für die ethische Lebensgestaltung.</li>
+<li>… ordnen die zentralen Aussagen der Religionen zu, deuten diese und schätzen ihre Wirksamkeit ein.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg7_e4">
+  <div class="einheit-header" onclick="toggle('jg7_e4')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Infrastrukturen & Chancen/Risiken digitaler Medien</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span> <span class="sdg-badge" title="SDG 9: Industrie, Innovation & Infrastruktur">SDG 9</span> <span class="sdg-badge" title="SDG 3: Gesundheit & Wohlbefinden">SDG 3</span></div>
+    <div class="chevron" id="jg7_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… vergleichen exemplarisch die Veränderung von Arbeitsprozessen durch den Einsatz von Informations- und Kommunikationstechnik.</li>
+<li>… beschreiben die Bedeutung von Informations- und Kommunikationstechnik für ausgewählte Arbeitsbereiche.</li>
+<li>… stellen die Nutzung eines technischen Systems in seiner Funktion im Bereich Information und Kommunikation dar.</li>
+<li>… beschreiben die Energieversorgung im Land Bremen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span> <span class="sdg-full">SDG 9 – Industrie, Innovation & Infrastruktur</span> <span class="sdg-full">SDG 3 – Gesundheit & Wohlbefinden</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg7_e5">
+  <div class="einheit-header" onclick="toggle('jg7_e5')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Haushalt und Konsum (WAT)</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum">SDG 12</span> <span class="sdg-badge" title="SDG 9: Industrie">SDG 9</span> <span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span> <span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 13: Klimaschutz">SDG 13</span></div>
+    <div class="chevron" id="jg7_e5-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg7_e5-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… unterscheiden Anbieter- und Nachfragerinteressen.</li>
+<li>… beschreiben marktwirtschaftliche Grundbegriffe (Markt, Angebot, Nachfrage, Preis, Wettbewerb) und diskutieren Zusammenhänge.</li>
+<li>… beschreiben und beurteilen Formen des Konsums (demonstrativ, kompensatorisch).</li>
+<li>… beschreiben Werbeformen und andere Mittel der Absatzförderung – insbesondere im Internet.</li>
+<li>… beschreiben verantwortungsbewusste, nachhaltige Handlungsweisen und wenden diese fachpraktisch an.</li>
+<li>… entwickeln Beispiele für ein nachhaltiges Konsumverhalten.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 12 – Nachhaltiger Konsum</span> <span class="sdg-full">SDG 9 – Industrie</span> <span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span> <span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 13 – Klimaschutz</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Digitale Medien zur Lösung fachspezifischer Problemstellungen verwenden</li>
+<li>Arbeitsergebnisse unter Verwendung von Fachtermini strukturiert und medial aufbereitet dokumentieren</li>
+<li>Komplexere Informationen aus fachspezifischen Quellen erschließen und auswerten (Statistiken, Internet, Warentests)</li>
+<li>Umfragen strukturiert durchführen und auswerten mit verschiedenen Tools (itslearning, Microsoft Forms, Mentimeter o.ä.)</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 15 Minuten</li>
+<li>Thema und Gliederung vorstellen, Produkt präsentieren</li>
+<li>Schrift lesbar, Stichwörter, Produkt thematisch sinnvoll gegliedert</li>
+<li>Lesestrategien nutzen</li>
+<li>Zwischen Beschreiben und Interpretieren unterscheiden</li>
+<li>Einfache Hypothesen formulieren und überprüfen</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Berufswahlpass einführen (ab Jahrgang 7)</li>
+<li>Potentialanalyse und Werkstatttage (Jahrgang 8)</li>
+<li>Betriebspraktikum 3 Wochen (Jahrgang 8)</li>
+<li>BIZ-Besuch (Berufsinformationszentrum)</li>
+<li>Berufsinformationsmesse (BIM)</li>
+<li>Bewerbungstraining beginnen</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Klimahaus Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Klimazonen, Klimawandel → Einheit Klimawandel & Planet Erde</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Planetarium <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Erde im Sonnensystem → Einheit Planet und Lebensraum Erde</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Betriebserkundung Stadttheater <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Arbeitsplätze, Infrastruktur → Einheit Infrastrukturen</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">THW – Aktionstag Katastrophenschutz <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Infrastrukturen, Zivilschutz → Einheit Infrastrukturen</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe und Partizipation (verpflichtend in Bremen, alle Jahrgänge)</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-jg8">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 8</h2>
+      <div class="jg-thema">Industrialisierung, Menschenrechte & Berufsorientierung</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg8_e0">
+  <div class="einheit-header" onclick="toggle('jg8_e0')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Unternehmen & Betriebe / Berufsorientierung</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 9: Industrie, Innovation & Infrastruktur">SDG 9</span></div>
+    <div class="chevron" id="jg8_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg8_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beurteilen Arbeitsplätze auch unter geschlechtsspezifischen Kriterien.</li>
+<li>… beschreiben Formen betrieblicher Arbeitsteilung und wenden diese exemplarisch an.</li>
+<li>… beschreiben die Organisation von Betrieben/Unternehmen exemplarisch.</li>
+<li>… erläutern und bewerten Vor- und Nachteile der Arbeitsteilung aus Arbeitnehmer-/Arbeitgebersicht.</li>
+<li>… diskutieren den Berufsorientierungsprozess als wichtige Aufgabe der persönlichen Lebensplanung.</li>
+<li>… beschreiben Anforderungen im Beruf und am Arbeitsplatz.</li>
+<li>… beschreiben und interpretieren relevante Bestimmungen des Jugendarbeitsschutzgesetzes.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 9 – Industrie, Innovation & Infrastruktur</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg8_e1">
+  <div class="einheit-header" onclick="toggle('jg8_e1')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Aufbruch in das neuzeitliche Europa – Absolutismus & Aufklärung</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 2: Kein Hunger">SDG 2</span> <span class="sdg-badge" title="SDG 4: Hochwertige Bildung">SDG 4</span></div>
+    <div class="chevron" id="jg8_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg8_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erklären die Veränderungsprozesse in Wissenschaft, Technik und Menschenbild vom Mittelalter bis zur Aufklärung.</li>
+<li>… reflektieren bedeutsame historische Aspekte für das moderne Weltbild Europas.</li>
+<li>… benennen die zentralen staatsphilosophischen Ideen der Aufklärung und ihre Anwendung.</li>
+<li>… stellen Ursachen, wesentliche Ereignisse und Auswirkungen wegweisender Revolutionen des 18. und 19. Jahrhunderts dar.</li>
+<li>… ordnen Auswirkungen der Revolutionen auf unseren heutigen Staat ein.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 2 – Kein Hunger</span> <span class="sdg-full">SDG 4 – Hochwertige Bildung</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg8_e2">
+  <div class="einheit-header" onclick="toggle('jg8_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Industrialisierung und soziale Frage</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 11: Nachhaltige Städte">SDG 11</span></div>
+    <div class="chevron" id="jg8_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg8_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… skizzieren ökonomische, soziale und politische Aspekte der Industriellen Revolution und vergleichen diese exemplarisch mit der heutigen Arbeitswelt.</li>
+<li>… problematisieren Interessenskonflikte in der Industriegesellschaft früher und heute.</li>
+<li>… zeigen Prägungen und Spuren aus der Geschichte in der eigenen Lebenswelt auf.</li>
+<li>… stellen Einflussfaktoren auf das Alltagsleben in verschiedenen Epochen dar.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 11 – Nachhaltige Städte</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg8_e3">
+  <div class="einheit-header" onclick="toggle('jg8_e3')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Menschenrechte & Religion und Staat</div>
+      <div class="einheit-fach">GGP – Gesellschaftliche Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 3: Gesundheit">SDG 3</span></div>
+    <div class="chevron" id="jg8_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg8_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern die Bedeutung von Menschenrechten.</li>
+<li>… beschreiben aktuelle Beispiele von Menschenrechtsverletzungen.</li>
+<li>… ordnen die Entstehung von Menschenrechten in ihren historisch-gesellschaftlichen Zusammenhang ein.</li>
+<li>… beschreiben wesentliche demokratische Prinzipien am Beispiel der Bundesrepublik Deutschland.</li>
+<li>… erläutern ein aktuelles Beispiel zur Diskussion um die Entwicklung des Rechtsstaats.</li>
+<li>… beschreiben das Verhältnis von Kirchen/Religionsgemeinschaften und Staat an einem aktuellen Beispiel.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 3 – Gesundheit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg8_e4">
+  <div class="einheit-header" onclick="toggle('jg8_e4')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Jugend und Gesellschaft / Ethik und Religion</div>
+      <div class="einheit-fach">GGP & Religion</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span></div>
+    <div class="chevron" id="jg8_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg8_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… arbeiten Wechselwirkungen zwischen gesellschaftlicher Stellung und Lebensbedingungen heraus.</li>
+<li>… erläutern spezifische Benachteiligungen von Gruppen und stellen Ansätze zur Überwindung dieser dar.</li>
+<li>… beurteilen an Beispielen die Auswirkungen aktueller staatlicher Maßnahmen für ausgewählte soziale Gruppen.</li>
+<li>… untersuchen die eigene Rolle in verschiedenen Lebenszusammenhängen und ordnen diese ein.</li>
+<li>… erörtern die Bedeutung unterschiedlicher sozialer Rollen und Kulturen.</li>
+<li>… vergleichen an Beispielen unterschiedliche Sichtweisen in religiös-ethischen Grundfragen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Digitale Medien zur Lösung fachspezifischer Problemstellungen verwenden</li>
+<li>Arbeitsergebnisse unter Verwendung von Fachtermini strukturiert und medial aufbereitet dokumentieren</li>
+<li>Komplexere Informationen aus fachspezifischen Quellen erschließen und auswerten (Statistiken, Internet, Warentests)</li>
+<li>Umfragen strukturiert durchführen und auswerten mit verschiedenen Tools (itslearning, Microsoft Forms, Mentimeter o.ä.)</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 15 Minuten</li>
+<li>Thema und Gliederung vorstellen, Produkt präsentieren</li>
+<li>Schrift lesbar, Stichwörter, Produkt thematisch sinnvoll gegliedert</li>
+<li>Lesestrategien nutzen</li>
+<li>Zwischen Beschreiben und Interpretieren unterscheiden</li>
+<li>Einfache Hypothesen formulieren und überprüfen</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Berufswahlpass einführen (ab Jahrgang 7)</li>
+<li>Potentialanalyse und Werkstatttage (Jahrgang 8)</li>
+<li>Betriebspraktikum 3 Wochen (Jahrgang 8)</li>
+<li>BIZ-Besuch (Berufsinformationszentrum)</li>
+<li>Berufsinformationsmesse (BIM)</li>
+<li>Bewerbungstraining beginnen</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Auswandererhaus Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Industrialisierung, Migration → Einheit Industrialisierung</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Schifffahrtsmuseum <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Industrie, Bremerhaven → Einheit Industrialisierung</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Jugend im Parlament (Bremische Bürgerschaft) <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Demokratie, Menschenrechte → Einheit Menschenrechte</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Mittelalter-Weihnachtsmarkt Bremen (Schlachte) <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Mittelalter, Geschichte → Einheit Aufbruch ins neuzeitliche Europa</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe und Partizipation (verpflichtend in Bremen, alle Jahrgänge)</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-jg9">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 9</h2>
+      <div class="jg-thema">Imperialismus, Demokratie & Globalisierung</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg9_e0">
+  <div class="einheit-header" onclick="toggle('jg9_e0')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Imperialismus</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span></div>
+    <div class="chevron" id="jg9_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erklären die Ursachen und Ziele des Imperialismus und beschreiben die Folgen für die betroffenen Völker bis in die Gegenwart an Beispielen.</li>
+<li>… ordnen verschiedene Erscheinungsformen imperialistischer Herrschaft ein.</li>
+<li>… zeigen die Verbindung zwischen dem Kolonialismus und der Entwicklung Bremens/Bremerhavens auf.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg9_e1">
+  <div class="einheit-header" onclick="toggle('jg9_e1')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Der Erste Weltkrieg & Weimarer Republik</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg9_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben Ursachen des Ersten Weltkriegs.</li>
+<li>… untersuchen den Zusammenhang von Ursachen und machtpolitischen Auseinandersetzungen der europäischen Großmächte.</li>
+<li>… erläutern Belastungsfaktoren der ersten Demokratie in Deutschland sowie Ursachen und Auswirkungen ihres Scheiterns.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg9_e2">
+  <div class="einheit-header" onclick="toggle('jg9_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Politische Herrschaft, Demokratie & Menschenrechte</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span></div>
+    <div class="chevron" id="jg9_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern an einem Beispiel aktuelle Gestaltungsfragen der deutschen Demokratie.</li>
+<li>… stellen die Bedeutung von Parteien und zivilgesellschaftlichen Initiativen dar.</li>
+<li>… beschreiben Ursachen des Ersten Weltkriegs.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg9_e3">
+  <div class="einheit-header" onclick="toggle('jg9_e3')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Glaube und Religionsgemeinschaften / Heilige Schriften</div>
+      <div class="einheit-fach">Religion – Deutungs- & Wahrnehmungskompetenz</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg9_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern an Beispielen (z.B. Propheten und Heiligen) Grundzüge der historischen und religiösen Entstehungssituation von Texten.</li>
+<li>… erläutern an Beispielen die Funktion religiöser Texte und Ausdrucksformen und prüfen ihre Relevanz für das eigene Leben.</li>
+<li>… nehmen wahr und erläutern, wie religiöse Vorstellungen die Werte und die Lebensführung der Menschen beeinflussen können.</li>
+<li>… erkennen und erläutern religiöse und ethische Grundfragen in persönlichen Entscheidungssituationen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg9_e4">
+  <div class="einheit-header" onclick="toggle('jg9_e4')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Globalisierung & Globale Herausforderungen</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-geografische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 13: Klimaschutz">SDG 13</span></div>
+    <div class="chevron" id="jg9_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… stellen beispielhaft Interessenskonflikte zwischen Sozial- und Wirtschaftspolitik dar.</li>
+<li>… erläutern an einem ausgewählten Beispiel globale Strukturen von internationaler Arbeitsteilung.</li>
+<li>… erläutern Möglichkeiten und Auswirkungen von fairem Handel.</li>
+<li>… zeigen exemplarisch die Entwicklungsunterschiede in ausgewählten Regionen der Erde auf.</li>
+<li>… nennen Kriterien für die Differenzierung von Entwicklungs-, Schwellen- und Industrieländern.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 13 – Klimaschutz</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg9_e5">
+  <div class="einheit-header" onclick="toggle('jg9_e5')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Arbeits- & Berufsorientierung</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 8: Menschenwürdige Arbeit">SDG 8</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span></div>
+    <div class="chevron" id="jg9_e5-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg9_e5-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… entwickeln zielgerichtet eigene Kompetenzen in Bezug auf berufliche Anforderungen.</li>
+<li>… beschreiben nationale und internationale Beschäftigungschancen und -risiken.</li>
+<li>… nutzen und bewerten Informations- und Beratungsangebote zu regionalen Ausbildungsmöglichkeiten.</li>
+<li>… übertragen Handlungswissen angemessen auf unterschiedliche Bewerbungsverfahren.</li>
+<li>… führen eine Expertenbefragung strukturiert durch und werten diese aus.</li>
+<li>… verwenden schulische und außerschulische betriebliche Praxiserfahrungen für die individuelle Übergangsplanung.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 8 – Menschenwürdige Arbeit</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Bewerbungsverfahren digital (Online, Telefon, Eignungstest)</li>
+<li>Informations- und Beratungsangebote online nutzen und bewerten</li>
+<li>Komplexe Inhalte multimedial darstellen (Video, PPT, Ausstellung, Erörterung)</li>
+<li>Arbeitsergebnisse adressatengerecht medial aufbereiten und öffentlich vorstellen</li>
+<li>Digitale Medien zur Lösung komplexer Problemstellungen selbstständig verwenden und reflektieren</li>
+<li>Propaganda und Medienmanipulation erkennen und analysieren</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 20 Minuten (Gliederung + Produkt + Fazit + Quellen)</li>
+<li>Erörterungen und Diskussionsbeiträge formulieren</li>
+<li>Komplexe Sachverhalte schriftlich zusammenhängend wiedergeben</li>
+<li>Glossar / Fachwörterbuch führen (itslearning Diskussion)</li>
+<li>Rhetorische Mittel in Diskussionen und Debatten anwenden</li>
+<li>Lerntagebuch nutzen</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Berufswahlpass abschließen und dokumentieren</li>
+<li>Betriebspraktika (2 × 2 Wochen in Jg. 9 und 10)</li>
+<li>BIM-Besuch (Berufsinformationsmesse)</li>
+<li>Bewerbungstraining (online, schriftlich, Gespräch)</li>
+<li>Projekt: Was kostet das Leben? (Jahrgang 10)</li>
+<li>Dualer vs. schulischer Ausbildungsweg</li>
+<li>Wöchentliche Einzelberatungen durch Berufsberaterin</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Denkort Bunker Valentin <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">NS-Zeit, Zwangsarbeit, Holocaust → Einheit Imperialismus & Erster Weltkrieg</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Stadtarchiv Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Lokale Geschichte, Quellenkritik → Einheiten GGP</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Stolpersteine (Stadtführung) <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Erinnerungskultur → Einheit Demokratie & Menschenrechte</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Überseemuseum Bremen <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Kolonialismus, Globalisierung → Einheit Imperialismus</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe und Partizipation (verpflichtend in Bremen, alle Jahrgänge)</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-jg10">
+  <div class="jg-header">
+    <div>
+      <h2>Jahrgang 10</h2>
+      <div class="jg-thema">Demokratien, Diktaturen & gesellschaftlicher Wandel</div>
+    </div>
+    <div class="legende">
+      <span><span class="dot ggp"></span>GGP</span>
+      <span><span class="dot rel"></span>Religion</span>
+      <span><span class="dot wat"></span>WAT</span>
+    </div>
+  </div>
+  <div class="section-label">Inhalte <small>– anklicken zum Aufklappen</small></div>
+  
+<div class="einheit" id="jg10_e0">
+  <div class="einheit-header" onclick="toggle('jg10_e0')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Der Nationalsozialismus / Demokratien und Diktaturen</div>
+      <div class="einheit-fach">GGP – Historische & gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span></div>
+    <div class="chevron" id="jg10_e0-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e0-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern die NS-Ideologie in ihren Grundzügen und ihre Umsetzung an ausgewählten Beispielen und erörtern die psychologischen und sozialen Auswirkungen auf die Bevölkerung.</li>
+<li>… bewerten kritische und unkritische Haltungen sowie Widerstandsbewegungen im nationalsozialistischen Deutschland und im Ausland.</li>
+<li>… erläutern Belastungsfaktoren der ersten Demokratie in Deutschland sowie Ursachen und Auswirkungen ihres Scheiterns.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e1">
+  <div class="einheit-header" onclick="toggle('jg10_e1')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Der Zweite Weltkrieg / Holocaust & Völkermord im 20. Jahrhundert</div>
+      <div class="einheit-fach">GGP – Historische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg10_e1-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e1-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern Ursachen des Zweiten Weltkriegs und ihre Auswirkungen auf Bremen/Bremerhaven, die deutsche Bevölkerung und die Politik im Staat und beschreiben diese in Bezug auf die Gegenwart.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e2">
+  <div class="einheit-header" onclick="toggle('jg10_e2')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Deutschland nach 1945 – DDR / Kalter Krieg / Wiedervereinigung</div>
+      <div class="einheit-fach">GGP – Historische & gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg10_e2-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e2-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erläutern die Kontroverse zwischen dem Ostblock und den Westmächten von Kriegsende bis zur Auflösung des Ostblocks anhand von ausgewählten Beispielen mit Bezug auf Deutschland und die Weltpolitik.</li>
+<li>… beschreiben die Unterschiede in den politischen und gesellschaftlichen Systemen in Ost und West am Beispiel BRD/DDR und erläutern Ideologien, Konzepte, Rechtfertigungen und Strategien.</li>
+<li>… erläutern den Prozess der deutschen Einigung im nationalen und internationalen Kontext und stellen Chancen und Probleme des vereinten Deutschlands gegenüber.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e3">
+  <div class="einheit-header" onclick="toggle('jg10_e3')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Gesellschaftlicher Wandel / Soziale Schichten / Sicherheit & Partizipation</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 5: Geschlechtergleichheit">SDG 5</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg10_e3-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e3-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… beschreiben und erklären die Sozialstruktur in Deutschland und beschreiben Veränderungen sozialer Strukturen und sich daraus ergebende Herausforderungen für Politik.</li>
+<li>… erläutern sozialpolitische Maßnahmen an einem ausgewählten Beispiel, stellen gesellschaftliche Interessenskonstellationen dar und beziehen Stellung dazu.</li>
+<li>… stellen Bevölkerungsentwicklung und -politik in unterschiedlich entwickelten Staaten dar und entwickeln Szenarien für die Zukunft.</li>
+<li>… beschreiben und diskutieren die Notwendigkeit einer langfristigen Daseinsvorsorge an Hand von Beispielen.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 5 – Geschlechtergleichheit</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e4">
+  <div class="einheit-header" onclick="toggle('jg10_e4')">
+    <div class="farbbalken ggp"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Europa & Internationale Politik / Frieden & Kooperation</div>
+      <div class="einheit-fach">GGP – Gesellschaftlich-politische Dimension</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 17: Partnerschaften zur Erreichung der Ziele">SDG 17</span></div>
+    <div class="chevron" id="jg10_e4-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e4-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… stellen die Bedeutung der europäischen Einigung für Deutschland an Beispielen dar und erörtern exemplarisch Chancen und Schwierigkeiten der europäischen Integration.</li>
+<li>… beschreiben das Spannungsverhältnis von Menschenrechtspolitik und internationaler Kooperation.</li>
+<li>… erläutern Interessens- und Machtkonstellationen an einem ausgewählten internationalen Konflikt.</li>
+<li>… stellen Voraussetzungen und Möglichkeiten der friedlichen Konfliktlösung an einem internationalen Konflikt dar.</li>
+<li>… stellen ihre Position zu Fragestellungen globaler und gesellschaftlicher Herausforderungen dar und begründen diese.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 17 – Partnerschaften zur Erreichung der Ziele</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e5">
+  <div class="einheit-header" onclick="toggle('jg10_e5')">
+    <div class="farbbalken rel"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Theodizee / Endlichkeit und Tod / Glaubensfreiheit & Religionskritik</div>
+      <div class="einheit-fach">Religion – Urteils-, Reflexions- & Deutungskompetenz / Dialogkompetenz</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 16: Frieden, Gerechtigkeit & starke Institutionen">SDG 16</span> <span class="sdg-badge" title="SDG 10: Weniger Ungleichheiten">SDG 10</span></div>
+    <div class="chevron" id="jg10_e5-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e5-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… begründen ihre eigene Haltung in religiös-existentiellen Fragen (z.B. Sinnfrage, Gerechtigkeit, Endlichkeit) und zu theologischen Themen (z.B. Jenseitsvorstellungen, Wahrheitsfrage) und setzen sich argumentativ mit den Auffassungen und Begründungen anderer auseinander.</li>
+<li>… analysieren, vergleichen und beurteilen begründet Positionen und Argumentationen aus Philosophie und Theologie unter gezielten Fragestellungen (z.B. Umgang mit Begrenztheit).</li>
+<li>… erläutern an Beispielen die Funktion religiöser Texte und Ausdrucksformen und prüfen ihre Relevanz für das eigene Leben.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 16 – Frieden, Gerechtigkeit & starke Institutionen</span> <span class="sdg-full">SDG 10 – Weniger Ungleichheiten</span></div>
+  </div>
+</div>
+
+<div class="einheit" id="jg10_e6">
+  <div class="einheit-header" onclick="toggle('jg10_e6')">
+    <div class="farbbalken wat"></div>
+    <div class="einheit-meta">
+      <div class="einheit-titel">Haushalt & Konsum / Was kostet das Leben? / Schuldenprävention</div>
+      <div class="einheit-fach">WAT</div>
+    </div>
+    <div class="sdg-preview"><span class="sdg-badge" title="SDG 1: Keine Armut">SDG 1</span> <span class="sdg-badge" title="SDG 2: Kein Hunger">SDG 2</span> <span class="sdg-badge" title="SDG 3: Gesundheit & Wohlbefinden">SDG 3</span> <span class="sdg-badge" title="SDG 12: Nachhaltiger Konsum & Produktion">SDG 12</span></div>
+    <div class="chevron" id="jg10_e6-chev">▾</div>
+  </div>
+  <div class="einheit-body" id="jg10_e6-body">
+    <div class="komp-head">Kompetenzen – Die Schüler:innen …</div>
+    <ul class="komp-liste"><li>… erörtern eine gesundheitsbewusste, bedürfnisgerechte und sozialverantwortliche Lebensführung.</li>
+<li>… beschreiben verbraucherpolitische Maßnahmen im Konfliktbereich zwischen Wettbewerb, Verbraucherinformation und Konsumentenschutz und untersuchen ihre Wirksamkeit.</li>
+<li>… stellen rechtliche Grundlagen zum Schutz von Verbrauchern, Arbeitnehmern und Umwelt sowie zur sozialen Sicherung dar.</li>
+<li>… beschreiben und diskutieren die Notwendigkeit einer langfristigen Daseinsvorsorge an Hand von Beispielen.</li>
+<li>… reflektieren Motive der Verschuldung und Chancen und Risiken der Kreditaufnahme sowie diskutieren den Umgang mit Überschuldung.</li></ul>
+    <div class="komp-head" style="margin-top:10px;">BNE-Ziele / SDGs</div>
+    <div class="sdg-full-wrap"><span class="sdg-full">SDG 1 – Keine Armut</span> <span class="sdg-full">SDG 2 – Kein Hunger</span> <span class="sdg-full">SDG 3 – Gesundheit & Wohlbefinden</span> <span class="sdg-full">SDG 12 – Nachhaltiger Konsum & Produktion</span></div>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Querschnittskompetenzen</div>
+  
+<div class="quer-grid">
+  <div class="quer-card media">
+    <div class="quer-titel">Medienkompetenz</div>
+    <ul><li>Bewerbungsverfahren digital (Online, Telefon, Eignungstest)</li>
+<li>Informations- und Beratungsangebote online nutzen und bewerten</li>
+<li>Komplexe Inhalte multimedial darstellen (Video, PPT, Ausstellung, Erörterung)</li>
+<li>Arbeitsergebnisse adressatengerecht medial aufbereiten und öffentlich vorstellen</li>
+<li>Digitale Medien zur Lösung komplexer Problemstellungen selbstständig verwenden und reflektieren</li>
+<li>Propaganda und Medienmanipulation erkennen und analysieren</li></ul>
+  </div>
+  <div class="quer-card sprache">
+    <div class="quer-titel">Sprachsensibler Unterricht</div>
+    <ul><li>Präsentationen bis 20 Minuten (Gliederung + Produkt + Fazit + Quellen)</li>
+<li>Erörterungen und Diskussionsbeiträge formulieren</li>
+<li>Komplexe Sachverhalte schriftlich zusammenhängend wiedergeben</li>
+<li>Glossar / Fachwörterbuch führen (itslearning Diskussion)</li>
+<li>Rhetorische Mittel in Diskussionen und Debatten anwenden</li>
+<li>Lerntagebuch nutzen</li></ul>
+  </div>
+  <div class="quer-card bo">
+    <div class="quer-titel">Berufsorientierung</div>
+    <ul><li>Berufswahlpass abschließen und dokumentieren</li>
+<li>Betriebspraktika (2 × 2 Wochen in Jg. 9 und 10)</li>
+<li>BIM-Besuch (Berufsinformationsmesse)</li>
+<li>Bewerbungstraining (online, schriftlich, Gespräch)</li>
+<li>Projekt: Was kostet das Leben? (Jahrgang 10)</li>
+<li>Dualer vs. schulischer Ausbildungsweg</li>
+<li>Wöchentliche Einzelberatungen durch Berufsberaterin</li></ul>
+  </div>
+</div>
+  <div class="section-label" style="margin-top:18px;">Außerschulische Lernorte &amp; Projekte</div>
+  <div class="lernorte-liste">
+<div class="lernort optional">
+  <div class="lernort-name">Denkort Bunker Valentin <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">NS-Zwangsarbeit, Holocaust → Einheit 2. Weltkrieg / Holocaust</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Tag der Stadtgeschichte <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Lokale Geschichte Bremerhavens → Einheiten Deutschland nach 1945 & gesellschaftlicher Wandel</div>
+</div>
+
+<div class="lernort pflicht">
+  <div class="lernort-name">Demokratietag Bremen <span class="badge-pflicht">verpflichtend</span></div>
+  <div class="lernort-bezug">Demokratische Teilhabe → Einheiten NS/Demokratie & Europa</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Überseemuseum <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Kolonialismus, globale Perspektiven → Einheit Europa & internationale Politik</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Stadtarchiv Bremerhaven <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Lokale Erinnerungskultur → Einheiten 2. Weltkrieg & DDR</div>
+</div>
+
+<div class="lernort optional">
+  <div class="lernort-name">Stolpersteine (Stadtführung) <span class="badge-opt">optional</span></div>
+  <div class="lernort-bezug">Holocaust, lokale Erinnerungskultur → Einheit 2. Weltkrieg</div>
+</div></div>
+</div>
+<div class="tab-content" id="tab-bewertung">
+  <div class="jg-header">
+    <div>
+      <h2>Bewertung &amp; Grundsätze</h2>
+      <div class="jg-thema">Leistungsbewertung im Themenorientierten Unterricht</div>
+    </div>
+  </div>
+  <div class="section-label">Grundsätze der Leistungswertung</div>
+  <div class="bw-card neutral">
+    <ul><li>Bewertet werden die im Unterricht und für den Unterricht erbrachten Leistungen der Schüler:innen.</li>
+<li>Die Leistungsbewertung bezieht sich auf die im Unterricht vermittelten Kenntnisse, Fähigkeiten und Fertigkeiten, wie sie im Fachcurriculum beschrieben sind.</li>
+<li>Leistungsbewertung muss für Schüler:innen sowie Erziehungsberechtigte transparent sein – die Kriterien müssen zu Beginn des Beurteilungszeitraums bekannt sein.</li></ul>
+  </div>
+  <div class="bw-grid">
+    <div class="bw-card bereich1">
+      <div class="bw-titel">Bereich 1: Schriftliche Arbeiten & gleichgestellte Formate</div>
+      <div class="bw-gewichtung">20–40 %</div>
+      <div class="bw-hinweis">Mindestens einmal, maximal dreimal pro Schulhalbjahr. Nicht jede Einheit muss abgeschlossen werden.</div>
+      <div class="komp-head" style="margin-top:10px;">Formate</div>
+      <ul><li>Erklärvideo</li>
+<li>Kinderbuch entwickeln</li>
+<li>Podcast</li>
+<li>Unterricht planen und durchführen</li>
+<li>Schaubild mit Erläuterung</li>
+<li>Mündliche Prüfung</li>
+<li>Internetblog</li>
+<li>Instagram-Projekt</li>
+<li>Weitere Formate in Absprache mit der Fachbereichsleitung möglich</li></ul>
+    </div>
+    <div class="bw-card bereich2">
+      <div class="bw-titel">Bereich 2: Laufende Unterrichtsarbeit</div>
+      <div class="bw-gewichtung">60–80 %  (höher gewichtet)</div>
+      <div class="bw-hinweis">Umfasst alle Leistungen außerhalb der schriftlichen Arbeiten.</div>
+      <div class="komp-head" style="margin-top:10px;">Umfasst u.a.</div>
+      <ul><li>Mündliche und schriftliche Mitarbeit</li>
+<li>Im Berufswahlpass abgelegte Arbeiten</li>
+<li>Dokumentationen aus Praxiskontakten</li>
+<li>Längerfristig gestellte häusliche Arbeiten (z.B. Referate)</li>
+<li>Gruppenarbeit und Mitarbeit in Unterrichtsprojekten (Prozess-Produkt-Präsentation)</li>
+<li>Werkstücke und weitere Handlungsprodukte</li>
+<li>Mappen</li>
+<li>Hausaufgaben</li></ul>
+    </div>
+  </div>
+</div>
+  <div class="footer">
+    <span>HHS Bremerhaven · Themenorientierter Unterricht · Fachcurriculum</span>
+    <span>Stand: 2026 · Kursiv = optional</span>
+  </div>
+</main>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('btn-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggle(uid) {
+  var body = document.getElementById(uid + '-body');
+  var chev = document.getElementById(uid + '-chev');
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  chev.classList.toggle('open', !open);
+}
+
+// Beim Laden: Jahrgang 5 anzeigen
+document.addEventListener('DOMContentLoaded', function() {
+  switchTab('jg5');
+});
+</script>
+</body>
+</html>
